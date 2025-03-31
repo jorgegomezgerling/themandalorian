@@ -6,8 +6,8 @@ from django.views.decorators.http import require_POST
 
 manager = ChapterManager()
 
-@require_POST  # Asegura que solo se acepten requests POST
-@csrf_exempt  # Solo para desarrollo
+@require_POST 
+@csrf_exempt  
 def reserve_chapter(request, chapter_id):
     user_id = request.POST.get('user_id', 'guest')
     if manager.reserve_chapter(chapter_id, user_id):

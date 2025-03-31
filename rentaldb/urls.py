@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.urls import path, include  # ¡Añade include!
-from chapters.views import chapter_list, reserve_chapter, confirm_payment  # Importa la nueva vista
+from django.urls import path, include
+from chapters.views import chapter_list, reserve_chapter, confirm_payment
 from django.http import HttpResponse
 
 def home(request):
