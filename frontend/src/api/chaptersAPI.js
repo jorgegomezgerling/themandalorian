@@ -16,3 +16,20 @@ export const reserveChapter = (chapterId, userId) => {
     params: {user_id: userId}
   });
 }
+
+// chaptersAPI.js
+export const rentChapter = (chapterId, price, userId = 'guest') => {
+  console.log("Enviando:", {
+    chapterId,
+    price: price.toFixed(2),
+    userId
+  });
+  
+  return api.post(`/confirm/${chapterId}/`, null, {
+    params: {
+      price: price.toFixed(2),
+      user_id: userId
+    },
+    validateStatus: false // Para manejar errores 4xx/5xx
+  });
+};

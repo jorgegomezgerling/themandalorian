@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 import redis
 
 class ChapterManager:
@@ -46,7 +47,12 @@ class ChapterManager:
 
     def confirm_payment(self, chapter_id, price):
         if self.get_status(chapter_id) == 'reserved':
+            # Guarda tanto el precio como el user_id en Redis
             self.r.delete(f'reserved:{chapter_id}')
-            self.r.setex(f'rented:{chapter_id}', 400, price)  # TTL=24hs
+            self.r.hset(f'rented:{chapter_id}', mapping={
+                'price': str(price),
+                'user_id': 'guest'  # O el user_id real
+            })
+            self.r.expire(f'rented:{chapter_id}', 86400)  # TTL=24hs
             return True
         return False
